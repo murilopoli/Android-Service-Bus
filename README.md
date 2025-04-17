@@ -33,8 +33,8 @@ sudo apt install redis-server -y
 3. **Clone o repositório do projeto:**
 
 ```bash
-git clone https://github.com/FernasG/RPi-Service-Bus.git
-cd RPi-Service-Bus/
+git clone https://github.com/murilopoli/Android-Service-Bus.git
+cd Android-Service-Bus/
 ```
 
 4. **Dê permissão e execute o script de configuração:**
@@ -49,7 +49,7 @@ chmod +x setup-redis-userland.sh
 5. **Execute o consumidor:**
 
 ```bash
-cd ~/RPi-Service-Bus/consumer
+cd ~/Android-Service-Bus/consumer
 pip install -r requirements.txt
 python3 consumer.py
 ```
@@ -70,7 +70,7 @@ python3 consumer.py
 1. **Abra o terminal (CMD ou PowerShell) e vá até a pasta `producer`:**
 
 ```powershell
-cd C:\caminho\para\RPi-Service-Bus\producer
+cd C:\caminho\para\Android-Service-Bus\producer
 ```
 
 2. **Crie e ative um ambiente virtual:**
