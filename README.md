@@ -1,86 +1,105 @@
-# Rasberry Pi Service Bus
+# Android Service Bus
 
-This project sets up a containerized environment using **Redis**, **Kafka**, and **RabbitMQ** to support multiple types of message-based communication. It includes a **Python producer** and **Python consumer** that interact via Redis, showcasing a simple request-response pattern.
+Este projeto apresenta uma solução simples de comunicação via Redis, onde o consumidor roda em um aparelho Android utilizando o Ubuntu dentro do aplicativo UserLAnd, e o produtor roda em um computador com Windows. A troca de mensagens entre eles é feita pela rede local usando o Redis.
 
-## 🚀 Features
+---
 
-- 🔧 **Dockerized Setup**: Easily run Redis, Kafka, and RabbitMQ using Docker containers.
-- 💬 **Multi-Protocol Messaging**: Supports integration with various message brokers (currently Redis-based implementation is functional).
-- 🐍 **Python Clients**:
-  - **Producer**: Sends messages via Redis and waits for a response.
-  - **Consumer**: Listens for messages on Redis and returns appropriate responses.
+## Servidor (Android com UserLAnd)
 
-## 🧠 Functionality
+### Requisitos
 
-The Python clients support the following operations:
+- Aparelho com Android 11
+- Aplicativo [UserLAnd](https://play.google.com/store/apps/details?id=tech.ula) instalado
+- Distribuição Ubuntu configurada dentro do UserLAnd
+- Acesso ao terminal via app ou SSH (como o PuTTY)
 
-1. **Send Welcome Message**  
-   → The producer sends a welcome message to the consumer and receives a greeting in response.
+---
 
-2. **Write to Document**  
-   → Sends a message to write text into a server-side document (e.g., log or text file).
+### Etapas no Android
 
-3. **Calculate a Function**  
-   → Sends two numbers to the consumer, which performs a predefined calculation (e.g., sum, product, etc.) and returns the result.
-
-## 🐳 Docker Services
-
-| Service     | Description                     |
-|-------------|---------------------------------|
-| Redis       | Used for message communication  |
-| Kafka       | Future support planned          |
-| RabbitMQ    | Future support planned          |
-
-## 📁 Project Structure
+1. **Atualize o sistema Ubuntu:**
 
 ```bash
-.
-├── Makefile
-├── .env.example
-├── docker-compose.yml
-├── docker-compose.services.yml
-├── producer/
-│   └── producer.py
-│   └── Dockerfile
-│   └── requirements.txt
-├── consumer/
-│   └── consumer.py
-│   └── Dockerfile
-│   └── requirements.txt
-└── README.md
+sudo apt update
+sudo apt upgrade -y
 ```
 
-## ⚙️ Usage
-
-### 1. Start Services
+2. **Instale o Redis:**
 
 ```bash
-make up
+sudo apt install redis-server -y
 ```
 
-### 2. Run Consumer
+3. **Clone o repositório do projeto:**
 
 ```bash
-make up:consumer
+git clone https://github.com/FernasG/RPi-Service-Bus.git
+cd RPi-Service-Bus/
 ```
 
-### 3. Run Producer
+4. **Dê permissão e execute o script de configuração:**
 
 ```bash
-make up:producer
+chmod +x setup-redis-userland.sh
+./setup-redis-userland.sh
 ```
 
-You'll be prompted to choose an operation: welcome message, document write, or calculation.
+> O script altera as configurações do Redis para permitir conexões de outros dispositivos na mesma rede local.
 
-## ✅ Requirements
+5. **Execute o consumidor:**
 
-- Docker & Docker Compose
-- Make
+```bash
+cd ~/RPi-Service-Bus/consumer
+pip install -r requirements.txt
+python3 consumer.py
+```
 
-Install dependencies with:
+---
 
-## 📌 Notes
+## Cliente (Windows)
 
-- The Redis implementation is fully functional.
-- Kafka and RabbitMQ containers are included for future development/experimentation.
-- Make sure the Redis service is fully running before launching the clients.
+### Requisitos
+
+- Python 3 instalado no sistema
+- Código do projeto copiado para o Windows
+
+---
+
+### Etapas no Windows
+
+1. **Abra o terminal (CMD ou PowerShell) e vá até a pasta `producer`:**
+
+```powershell
+cd C:\caminho\para\RPi-Service-Bus\producer
+```
+
+2. **Crie e ative um ambiente virtual:**
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+3. **Instale as dependências necessárias:**
+
+```powershell
+pip install -r requirements.txt
+```
+
+4. **Execute o produtor:**
+
+```powershell
+python producer.py
+```
+
+---
+
+## Observações importantes
+
+- Verifique se a porta 6379 está liberada na rede local para permitir a comunicação entre os dispositivos.
+- Não é recomendado expor o Redis diretamente para a internet. Essa configuração foi feita para funcionar dentro de uma rede segura.
+- Para reforçar a segurança, considere definir uma senha no arquivo `redis.conf`.
+
+---
+
+Esse projeto foi desenvolvido para fins de estudo e testes locais, facilitando a troca de dados entre dispositivos Android e Windows usando Redis.
