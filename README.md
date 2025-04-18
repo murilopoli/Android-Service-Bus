@@ -46,7 +46,13 @@ chmod +x setup-redis-userland.sh
 
 > O script altera as configurações do Redis para permitir conexões de outros dispositivos na mesma rede local.
 
-5. **Execute o consumidor:**
+5. **Execute o Redis:**
+
+```bash
+redis-server
+```
+
+6. **Execute o consumidor(Em outro terminal):**
 
 ```bash
 cd ~/Android-Service-Bus/consumer
