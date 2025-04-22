@@ -13,11 +13,8 @@ sudo sed -i 's/^protected-mode .*/protected-mode no/' /etc/redis/redis.conf
 echo "🚀 Iniciando Redis com configurações abertas..."
 nohup redis-server --protected-mode no --bind 0.0.0.0 &>/dev/null &
 
-echo "📁 Clonando o repositório RPi-Service-Bus..."
-git clone https://github.com/FernasG/RPi-Service-Bus.git
-
 echo "🐍 Instalando dependências do consumer..."
-cd RPi-Service-Bus/consumer
+cd ~/Android-Service-Bus/consumer
 pip install -r requirements.txt
 
 echo "✅ Setup concluído com sucesso! Execute o consumer com: 'python3 consumer.py' na pasta ~/Android-Service-Bus/consumer"
