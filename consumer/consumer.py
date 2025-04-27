@@ -9,7 +9,7 @@ def text_message(payload: dict):
     request_id = payload["id"]
     body = payload["body"]
 
-    message = f"Olá {body["name"].capitalize()}, como você está?"
+    message = f"Olá {body['name'].capitalize()}, como você está?"
     response = {"message": message}
 
     r.publish(request_id, json.dumps(response))
@@ -19,7 +19,7 @@ def update_document(payload: dict):
     body = payload["body"]
 
     with open("file.txt", "a") as file:
-        file.write(f"{body["content"]}\n")
+        file.write(f"{body['content']}\n")
 
     response = {"message": "Arquivo alterado com sucesso"}
 
