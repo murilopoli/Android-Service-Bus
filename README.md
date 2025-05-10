@@ -102,10 +102,15 @@ docker-compose down
 
 ## 5. Estrutura do Projeto
 Android-Service-Bus/
+
 ├── consumer.py
+
 ├── producer.py
+
 ├── start_services.sh
+
 ├── docker-compose.yml
+
 └── README.md
 
 ---
