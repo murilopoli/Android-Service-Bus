@@ -127,5 +127,3 @@ Android-Service-Bus/
   - Os scripts exibem mensagens detalhadas caso não consigam se conectar aos serviços.
 
 ---
-
-Com este ambiente, você pode experimentar, estudar e integrar sistemas distribuídos de mensageria de forma sustentável, portátil e flexível, conforme a proposta do projeto.
