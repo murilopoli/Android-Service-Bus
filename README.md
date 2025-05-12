@@ -29,6 +29,7 @@ cd Android-Service-Bus/
 2. **Execute o consumidor(Em outro terminal):**
 
 ```bash
+pip install redis
 cd ~/Android-Service-Bus/consumer
 python3 consumer.py
 ```
