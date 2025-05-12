@@ -69,10 +69,43 @@ python producer.py
 
 ## Observações importantes
 
-- Verifique se a porta 6379 está liberada na rede local para permitir a comunicação entre os dispositivos.
-- Não é recomendado expor o Redis diretamente para a internet. Essa configuração foi feita para funcionar dentro de uma rede segura.
-- Para reforçar a segurança, considere definir uma senha no arquivo `redis.conf`.
+- **Portas padrão:**  
+  - Redis: 6379  
+  - RabbitMQ: 5672 (mensageria), 15672 (painel web)
+
+- **Conexão em rede local:**  
+  - Para rodar producer/consumer em máquinas diferentes, informe o IP do servidor Docker na inicialização dos scripts.
+
+- **Tratamento de erros:**  
+  - Os scripts informam se algum serviço não está disponível e continuam rodando com os demais habilitados.
+
+- **Painel RabbitMQ:**  
+  - Acesse em [http://localhost:15672](http://localhost:15672)  
+    Usuário: `guest`  
+    Senha: `guest`
 
 ---
 
-Esse projeto foi desenvolvido para fins de estudo e testes locais, facilitando a troca de dados entre dispositivos Android e Windows usando Redis.
+## 5. Estrutura do Projeto
+Android-Service-Bus/
+├── consumer.py
+├── producer.py
+├── start_services.sh
+├── docker-compose.yml
+└── README.md
+---
+
+## 6. Solução de Problemas
+
+- **RabbitMQ:**
+  - Se a porta 5672 estiver em uso, pare o serviço RabbitMQ local ou altere a porta do container no `docker-compose.yml`.
+
+- **Redis:**
+  - Certifique-se de que a porta 6379 não está ocupada por outro serviço local.
+
+- **Mensagens de erro nos scripts Python:**
+  - Os scripts exibem mensagens detalhadas caso não consigam se conectar aos serviços.
+
+---
+
+Com este ambiente, você pode experimentar, estudar e integrar sistemas distribuídos de mensageria de forma sustentável, portátil e flexível, conforme a proposta do projeto.
