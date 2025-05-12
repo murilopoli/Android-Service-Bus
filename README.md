@@ -1,6 +1,6 @@
 # Android Service Bus
 
-Este projeto implementa um barramento de comunicação sustentável, portátil e de fácil replicação, integrando **Redis** e **RabbitMQ** para facilitar a troca de mensagens entre sistemas distribuídos, tanto em ambiente doméstico quanto comercial de pequeno porte.
+Este projeto apresenta uma solução simples de comunicação via Redis, onde o consumidor roda em um aparelho Android utilizando o Ubuntu dentro do aplicativo UserLAnd, e o produtor roda em um computador com Windows. A troca de mensagens entre eles é feita pela rede local usando o Redis.
 
 ---
 
@@ -12,12 +12,8 @@ Este projeto implementa um barramento de comunicação sustentável, portátil e
 - Aplicativo [UserLAnd](https://play.google.com/store/apps/details?id=tech.ula) instalado
 - Distribuição Ubuntu configurada dentro do UserLAnd
 - Acesso ao terminal via app ou SSH (como o PuTTY)
-- **Docker** e **Docker Compose** instalados
-- **Python 3** instalado
-- Bibliotecas Python:
-```bash
-pip install redis pika
-```
+- Python instalado em ambas as máquinas
+- Redis Server instalado
 
 ---
 
@@ -30,96 +26,53 @@ git clone https://github.com/murilopoli/Android-Service-Bus.git
 cd Android-Service-Bus/
 ```
 
-2. **Inicie todos os serviços simultaneamente:**
+2. **Execute o consumidor(Em outro terminal):**
 
 ```bash
-chmod +x start_services.sh
-./start_services.sh
-```
-
-3. **Verifique o status dos serviços:**
-
-```bash
-docker-compose ps
-```
-
----
-
-## 2. Executando os Scripts Python
-
-### A. Consumer (Consumidor)
-
-1. Execute:
-```bash
+cd ~/Android-Service-Bus/consumer
 python3 consumer.py
 ```
 
-2. Siga as instruções:
-- Escolha se a conexão será `localhost` ou outro IP.
-- Habilite os serviços desejados (Redis, RabbitMQ).
-- O consumidor ficará aguardando mensagens nos serviços selecionados.
+---
 
-### B. Producer (Produtor)
+## Cliente (Windows)
 
-1. Em outro terminal, execute:
-```bash
-python3 producer.py
+### Requisitos
+
+- Python 3 instalado no sistema
+- Código do projeto copiado para o Windows
+
+---
+
+### Etapas no Windows
+
+1. **Abra o terminal (CMD ou PowerShell) e vá até a pasta `producer`:**
+
+```powershell
+cd C:\caminho\para\Android-Service-Bus\producer
 ```
 
-2. Siga as instruções:
-- Escolha se a conexão será `localhost` ou outro IP.
-- Habilite os serviços desejados (os mesmos do consumidor).
-- Digite mensagens para enviar. Elas serão publicadas apenas nos serviços habilitados.
+2. **Crie e ative um ambiente virtual:**
 
----
-
-## 3. Parando os Serviços
-
-Para parar todos os serviços Docker:
-```bash
-docker-compose down
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
 ```
----
 
-## 4. Observações Importantes
+3. **Execute o produtor:**
 
-- **Portas padrão:**  
-  - Redis: 6379  
-  - RabbitMQ: 5672 (mensageria), 15672 (painel web)
-
-- **Conexão em rede local:**  
-  - Para rodar producer/consumer em máquinas diferentes, informe o IP do servidor Docker na inicialização dos scripts.
-
-- **Tratamento de erros:**  
-  - Os scripts informam se algum serviço não está disponível e continuam rodando com os demais habilitados.
-
-- **Painel RabbitMQ:**  
-  - Acesse em [http://localhost:15672](http://localhost:15672)  
-    Usuário: `guest`  
-    Senha: `guest`
+```powershell
+python producer.py
+```
 
 ---
 
-## 5. Estrutura do Projeto
-Android-Service-Bus/
-├── consumer.py
-├── producer.py
-├── start_services.sh
-├── docker-compose.yml
-└── README.md
----
+## Observações importantes
 
-## 6. Solução de Problemas
-
-- **RabbitMQ:**
-  - Se a porta 5672 estiver em uso, pare o serviço RabbitMQ local ou altere a porta do container no `docker-compose.yml`.
-
-- **Redis:**
-  - Certifique-se de que a porta 6379 não está ocupada por outro serviço local.
-
-- **Mensagens de erro nos scripts Python:**
-  - Os scripts exibem mensagens detalhadas caso não consigam se conectar aos serviços.
+- Verifique se a porta 6379 está liberada na rede local para permitir a comunicação entre os dispositivos.
+- Não é recomendado expor o Redis diretamente para a internet. Essa configuração foi feita para funcionar dentro de uma rede segura.
+- Para reforçar a segurança, considere definir uma senha no arquivo `redis.conf`.
 
 ---
 
-Com este ambiente, você pode experimentar, estudar e integrar sistemas distribuídos de mensageria de forma sustentável, portátil e flexível, conforme a proposta do projeto.
+Esse projeto foi desenvolvido para fins de estudo e testes locais, facilitando a troca de dados entre dispositivos Android e Windows usando Redis.
