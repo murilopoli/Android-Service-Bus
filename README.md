@@ -12,8 +12,6 @@ Este projeto apresenta uma solução simples de comunicação via Redis, onde o 
 - Aplicativo [UserLAnd](https://play.google.com/store/apps/details?id=tech.ula) instalado
 - Distribuição Ubuntu configurada dentro do UserLAnd
 - Acesso ao terminal via app ou SSH (como o PuTTY)
-- Python instalado em ambas as máquinas
-- Redis Server instalado
 
 ---
 
@@ -26,11 +24,21 @@ git clone https://github.com/murilopoli/Android-Service-Bus.git
 cd Android-Service-Bus/
 ```
 
-2. **Execute o consumidor(Em outro terminal):**
+2. **Dê permissão e execute o script de configuração:**
 
 ```bash
-pip install redis
+chmod +x setup-redis-userland.sh
+./setup-redis-userland.sh
+```
+
+> O script altera as configurações do Redis para permitir conexões de outros dispositivos na mesma rede local.
+
+6. **Execute o consumidor(Em outro terminal):**
+3. **Execute o consumidor(Em outro terminal):**
+
+```bash
 cd ~/Android-Service-Bus/consumer
+pip install -r requirements.txt
 python3 consumer.py
 ```
 
@@ -60,7 +68,13 @@ python -m venv .venv
 .venv\Scripts\activate
 ```
 
-3. **Execute o produtor:**
+3. **Instale as dependências necessárias:**
+
+```powershell
+pip install -r requirements.txt
+```
+
+4. **Execute o produtor:**
 
 ```powershell
 python producer.py
@@ -68,4 +82,12 @@ python producer.py
 
 ---
 
-Com este ambiente, você pode experimentar, estudar e integrar sistemas distribuídos de mensageria de forma sustentável, portátil e flexível, conforme a proposta do projeto.
+## Observações importantes
+
+- Verifique se a porta 6379 está liberada na rede local para permitir a comunicação entre os dispositivos.
+- Não é recomendado expor o Redis diretamente para a internet. Essa configuração foi feita para funcionar dentro de uma rede segura.
+- Para reforçar a segurança, considere definir uma senha no arquivo `redis.conf`.
+
+---
+
+Esse projeto foi desenvolvido para fins de estudo e testes locais, facilitando a troca de dados entre dispositivos Android e Windows usando Redis.
