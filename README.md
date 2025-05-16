@@ -17,6 +17,8 @@ Este projeto apresenta uma solução simples de comunicação via Redis, onde o 
 
 ### Etapas no Android
 
+**COM O REDIS SERVER JÁ INSTALADO E EXECUTANDO**
+
 1. **Clone o repositório do projeto:**
 
 ```bash
@@ -24,17 +26,7 @@ git clone https://github.com/murilopoli/Android-Service-Bus.git
 cd Android-Service-Bus/
 ```
 
-2. **Dê permissão e execute o script de configuração:**
-
-```bash
-chmod +x setup-redis-userland.sh
-./setup-redis-userland.sh
-```
-
-> O script altera as configurações do Redis para permitir conexões de outros dispositivos na mesma rede local.
-
-6. **Execute o consumidor(Em outro terminal):**
-3. **Execute o consumidor(Em outro terminal):**
+2. **Execute o consumidor:**
 
 ```bash
 cd ~/Android-Service-Bus/consumer
