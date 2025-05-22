@@ -2,6 +2,7 @@ import redis
 import pika
 import uuid
 import json
+import time
 from kafka import KafkaProducer, KafkaConsumer
 
 def get_connection_info():
@@ -21,30 +22,44 @@ def get_rabbitmq_credentials():
     password = input("Senha RabbitMQ: ").strip()
     return pika.PlainCredentials(user, password)
 
-def wait_redis_response(r, response_channel):
+def wait_redis_response(host, response_channel, pubsub, timeout=30):
     try:
-        pubsub = r.pubsub()
-        pubsub.subscribe(response_channel)
         print(f"Aguardando resposta no canal {response_channel}...")
-        for message in pubsub.listen():
-            if message['type'] == 'message':
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            message = pubsub.get_message(timeout=1)
+            if message and message['type'] == 'message':
                 data = message['data'].decode()
-                pubsub.unsubscribe(response_channel)
+                print(f"[Redis] Mensagem recebida no canal {response_channel}")
                 return data
+            time.sleep(0.1)
+        return "Timeout: Nenhuma resposta recebida do Redis após {} segundos".format(timeout)
     except Exception as e:
         print(f"[ERRO Redis] Erro ao aguardar resposta: {e}")
         return None
 
 def send_redis(host, msg):
     try:
-        r = redis.Redis(host=host, port=6379, db=0)
+        # Conexão separada para subscrição
+        r_sub = redis.Redis(host=host, port=6379, db=0)
+        pubsub = r_sub.pubsub()
         response_channel = f"response_{str(uuid.uuid4())}"
+        # Subscrever ao canal de resposta antes de publicar a mensagem
+        pubsub.subscribe(response_channel)
+        print(f"Subscrevendo ao canal {response_channel} antes de enviar a mensagem...")
+        time.sleep(0.5)  # Pequeno atraso para garantir subscrição
+        # Conexão separada para publicar
+        r_pub = redis.Redis(host=host, port=6379, db=0)
         message_data = json.dumps({"message": msg, "response_channel": response_channel})
-        r.publish("mychannel", message_data)
+        r_pub.publish("mychannel", message_data)
         print("Enviado via Redis.")
-        response = wait_redis_response(r, response_channel)
+        # Esperar resposta com timeout de 30 segundos
+        response = wait_redis_response(host, response_channel, pubsub, timeout=30)
         if response:
             print(f"[Redis] Resposta recebida: {response}")
+        pubsub.unsubscribe(response_channel)
+        r_sub.close()
+        r_pub.close()
     except Exception as e:
         print(f"[ERRO Redis] Nao foi possivel enviar: {e}")
 
