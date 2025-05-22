@@ -95,7 +95,7 @@ sleep 5
 nohup ~/kafka/bin/kafka-server-start.sh ~/kafka/config/server.properties > ~/kafka.log 2>&1 &
 ```
 
-4. **Execute o consumidor:**
+5. **Execute o consumidor:**
 
 ```bash
 cd ~/Android-Service-Bus/consumer
@@ -103,16 +103,16 @@ pip install -r requirements.txt
 python3 consumer.py
 ```
 
-5. **Obter IP do Android**: Execute `ip addr` e anote o IP.
+6. **Obter IP do Android**: Execute `ip addr` e anote o IP.
 
-6. **Executar Consumidor**:
+7. **Executar Consumidor**:
 ```bash
 git clone https://github.com/murilopoli/Android-Service-Bus.git
 cd Android-Service-Bus/consumer
 pip install -r requirements.txt
 python3 consumer.py
 ```
-Selecione conexão e serviços (Redis/RabbitMQ).
+Selecione conexão e serviços (Redis/RabbitMQ/Kafka).
 
 ### No Cliente (Produtor)
 1. **Preparar Ambiente**:
