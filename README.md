@@ -28,17 +28,17 @@ A solução é independente de linguagem, garantindo flexibilidade.
 ## Instalação e Execução
 ### No Android (Servidor/Consumidor)
 
-1. **Configurar UserLAnd**: Instale, configure Ubuntu, acesse terminal.
+#### 1. **Configurar UserLAnd**: Instale, configure Ubuntu, acesse terminal.
 
-2. **Obter IP do Android**: 
+#### 2. **Obter IP do Android**: 
 Execute:
 ```bash
 sudo apt install net-tools
 ifconfig 
 ```
-e anote o IP.
+e anote o IP da rede local.
 
-3. **Instalar Redis**:
+#### 3. **Instalar Redis**:
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install redis-server -y
@@ -51,7 +51,7 @@ daemonize yes
 ```
 Inicie: `redis-server /etc/redis/redis.conf`.
 
-4.**Instalar o RabbitMQ**:
+#### 4.**Instalar o RabbitMQ**:
 ```bash
 sudo apt install rabbitmq-server -y
 ```
@@ -64,7 +64,7 @@ sudo rabbitmqctl set_permissions -p / user ".*" ".*" ".*"
 
 Inicie: `sudo rabbitmq-server`.
 
-5. **Kafka/ZooKeeper**:
+#### 5. **Kafka/ZooKeeper**:
 Instale Java:
 ```bash
 sudo apt install openjdk-17-jdk -y
@@ -102,7 +102,7 @@ zookeeper.connect=localhost:2181
 listeners=PLAINTEXT://0.0.0.0:9092
 advertised.listeners=PLAINTEXT://IP_DO_ANDROID:9092
 ```
-Altere o texto IP_DO_ANDROID com o ip anotado no Passo 2.
+Altere o texto IP_DO_ANDROID com o IP anotado no Passo 2.
 
 Inicie:
 ```bash
@@ -111,7 +111,7 @@ sleep 5
 nohup ~/kafka/bin/kafka-server-start.sh ~/kafka/config/server.properties > ~/kafka.log 2>&1 &
 ```
 
-6. **Execute o consumidor:**
+#### 6. **Execute o consumidor:**
 
 ```bash
 cd ~/Android-Service-Bus/consumer
@@ -119,7 +119,7 @@ pip install -r requirements.txt
 python3 consumer.py
 ```
 
-7. **Executar Consumidor**:
+#### 7. **Executar Consumidor**:
 ```bash
 git clone https://github.com/murilopoli/Android-Service-Bus.git
 cd Android-Service-Bus/consumer
@@ -129,23 +129,24 @@ python3 consumer.py
 Selecione conexão e serviços (Redis/RabbitMQ/Kafka).
 
 ### No Cliente (Produtor)
-1. **Preparar Ambiente**:
+#### 1. **Preparar Ambiente**:
 
 Instale Python 3, clone repositório:
 ```bash
 git clone https://github.com/murilopoli/Android-Service-Bus.git
 cd Android-Service-Bus
 ```
-2. **Executar Produtor**:
-#### Windows
+#### 2. **Executar Produtor**:
+##### Windows
 ```powershell
 cd producer
 python -m venv .venv
 .venv\Scripts\activate
+python producer.py
 ```
 ou source .venv/bin/activate 
 
-#### Linux/Mac
+##### Linux/Mac
 ```bash
 pip install -r requirements.txt
 python producer.py
