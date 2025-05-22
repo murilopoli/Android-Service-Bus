@@ -42,6 +42,13 @@ Inicie: `redis-server`.
 ```bash
 sudo apt install rabbitmq-server -y
 ```
+Configure usuario:
+```bash
+sudo rabbitmqctl add_user user pass
+sudo rabbitmqctl set_user_tags user administrator
+sudo rabbitmqctl set_permissions -p / user ".*" ".*" ".*"
+```
+
 Inicie: `sudo rabbitmq-server`.
 
 4. **Kafka/ZooKeeper**:
