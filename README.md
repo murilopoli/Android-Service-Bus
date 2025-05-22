@@ -35,8 +35,13 @@ A solução é independente de linguagem, garantindo flexibilidade.
 sudo apt update && sudo apt upgrade -y
 sudo apt install redis-server -y
 ```
-Edite `/etc/redis/redis.conf`: `bind 0.0.0.0`, desative `protected-mode`.
-Inicie: `redis-server`.
+Edite `/etc/redis/redis.conf`: 
+```bash
+bind 0.0.0.0
+protected-mode no
+daemonize yes
+```
+Inicie: `redis-server /etc/redis/redis.conf`.
 
 3.**Instalar o RabbitMQ**:
 ```bash
