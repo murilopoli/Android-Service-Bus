@@ -75,6 +75,7 @@ tar -xvzf ~/kafka.tgz --strip 1
 
 Configure ZooKeeper:
 ```bash
+cd ~/
 mkdir ~/zookeeper-data
 nano ~/kafka/config/zookeeper.properties
 ```
