@@ -30,7 +30,15 @@ A solução é independente de linguagem, garantindo flexibilidade.
 
 1. **Configurar UserLAnd**: Instale, configure Ubuntu, acesse terminal.
 
-2. **Instalar Redis**:
+2. **Obter IP do Android**: 
+Execute:
+```bash
+sudo apt install net-tools
+ifconfig 
+```
+e anote o IP.
+
+3. **Instalar Redis**:
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install redis-server -y
@@ -43,7 +51,7 @@ daemonize yes
 ```
 Inicie: `redis-server /etc/redis/redis.conf`.
 
-3.**Instalar o RabbitMQ**:
+4.**Instalar o RabbitMQ**:
 ```bash
 sudo apt install rabbitmq-server -y
 ```
@@ -56,7 +64,7 @@ sudo rabbitmqctl set_permissions -p / user ".*" ".*" ".*"
 
 Inicie: `sudo rabbitmq-server`.
 
-4. **Kafka/ZooKeeper**:
+5. **Kafka/ZooKeeper**:
 Instale Java:
 ```bash
 sudo apt install openjdk-17-jdk -y
@@ -94,6 +102,8 @@ zookeeper.connect=localhost:2181
 listeners=PLAINTEXT://0.0.0.0:9092
 advertised.listeners=PLAINTEXT://IP_DO_ANDROID:9092
 ```
+Altere o texto IP_DO_ANDROID com o ip anotado no Passo 2.
+
 Inicie:
 ```bash
 nohup ~/kafka/bin/zookeeper-server-start.sh ~/kafka/config/zookeeper.properties > ~/zookeeper.log 2>&1 &
@@ -101,15 +111,13 @@ sleep 5
 nohup ~/kafka/bin/kafka-server-start.sh ~/kafka/config/server.properties > ~/kafka.log 2>&1 &
 ```
 
-5. **Execute o consumidor:**
+6. **Execute o consumidor:**
 
 ```bash
 cd ~/Android-Service-Bus/consumer
 pip install -r requirements.txt
 python3 consumer.py
 ```
-
-6. **Obter IP do Android**: Execute `ip addr` e anote o IP.
 
 7. **Executar Consumidor**:
 ```bash
