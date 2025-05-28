@@ -141,7 +141,7 @@ ou source .venv/bin/activate
 ##### Linux/Mac
 ```bash
 pip install -r requirements.txt
-python producer.py
+python3 producer.py
 ```
 Insira IP do Android, selecione serviços, envie mensagens (digite `exit` para sair).
 
