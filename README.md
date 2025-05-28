@@ -118,14 +118,6 @@ cd ~/Android-Service-Bus/consumer
 pip install -r requirements.txt
 python3 consumer.py
 ```
-
-#### 7. **Executar Consumidor**:
-```bash
-git clone https://github.com/murilopoli/Android-Service-Bus.git
-cd Android-Service-Bus/consumer
-pip install -r requirements.txt
-python3 consumer.py
-```
 Selecione conexão e serviços (Redis/RabbitMQ/Kafka).
 
 ### No Cliente (Produtor)
