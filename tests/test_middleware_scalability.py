@@ -10,25 +10,25 @@ from datetime import datetime
 # IPs e credenciais fornecidos.
 
 # Configuracao Redis
-REDIS_HOST = "192.168.1.8" # Altere para o IP do seu servidor Redis (ex: "192.168.1.100")
+REDIS_HOST = "localhost" # Altere para o IP do seu servidor Redis (ex: "192.168.1.100")
 REDIS_PORT = 6379 # Porta padrao do Redis
 REDIS_CHANNEL = "android_service_bus_test"
 
 # Configuracao RabbitMQ
-RABBITMQ_HOST = "192.168.1.8" # Altere para o IP do seu servidor RabbitMQ (ex: "192.168.1.101")
+RABBITMQ_HOST = "localhost" # Altere para o IP do seu servidor RabbitMQ (ex: "192.168.1.101")
 RABBITMQ_PORT = 5672 # Porta padrao do RabbitMQ
-RABBITMQ_USERNAME = "admin" # Altere para o nome de usuario administrador do RabbitMQ
-RABBITMQ_PASSWORD = "admin" # Altere para a senha do usuario administrador do RabbitMQ
+RABBITMQ_USERNAME = "guest" # Altere para o nome de usuario administrador do RabbitMQ
+RABBITMQ_PASSWORD = "guest" # Altere para a senha do usuario administrador do RabbitMQ
 RABBITMQ_QUEUE = "android_service_bus_test_queue"
 
 # Configuracao Kafka
-KAFKA_BOOTSTRAP_SERVERS = ["192.168.1.8:9092"] # Lista de enderecos dos brokers Kafka (ex: ["192.168.1.102:9092"])
+KAFKA_BOOTSTRAP_SERVERS = ["localhost:9092"] # Lista de enderecos dos brokers Kafka (ex: ["192.168.1.102:9092"])
 KAFKA_TOPIC = "android_service_bus_test_topic"
 # OBS: Autenticacao Kafka (SASL/SSL) precisaria de configuracao adicional aqui se necessaria.
 
-NUM_MESSAGES_PER_TEST = 50000
+NUM_MESSAGES_PER_TEST = 10000
 MESSAGE_SIZE_BYTES = 100
-NUM_CONCURRENT_CLIENTS = 50
+NUM_CONCURRENT_CLIENTS = 10
 
 SAMPLE_MESSAGE = 'A' * MESSAGE_SIZE_BYTES
 
